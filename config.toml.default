@@ -1,0 +1,6 @@
+[loops]
+path_raw = '~/Library/Mobile\ Documents/com~apple~CloudDocs/Music/Loops'
+path_processed = '~/Music/Loops'
+
+[device]
+volume = 'JAMMAN'
