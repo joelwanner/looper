@@ -1,6 +1,8 @@
 [loops]
-path_raw = '~/Library/Mobile\ Documents/com~apple~CloudDocs/Music/Loops'
-path_processed = '~/Music/Loops'
+path_raw = '/Users/whoami/Library/Mobile\ Documents/com~apple~CloudDocs/Music/Loops'
+path_processed = '/Users/whoami/Music/Loops'
+gain = -24.0 # [dB]
+bit_depth = 16 # [bit]
 
 [device]
 volume = 'JAMMAN'
