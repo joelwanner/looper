@@ -1,7 +1,8 @@
 from pathlib import Path
 import re
 import uuid
-import xml.etree.cElementTree as ET
+from shutil import copyfile
+import xml.etree.ElementTree as ET
 
 
 class Slot:
@@ -66,3 +67,5 @@ class Slot:
 
         self.write_patch_xml(loop.name)
         self.write_phrase_xml(phrase, bpm, 4)
+        filename = 'phrase' + loop.suffix
+        copyfile(loop, phrase / filename)

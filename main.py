@@ -30,17 +30,29 @@ def copy_loops():
 
     for i, loop in enumerate(from_dir.glob("*")):
         print(loop)
-        s = Slot(storage_dir, i)
-        s.store(loop)
+        slot = Slot(storage_dir, i+1)  # Start at 01
+        slot.store(loop)
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--process', action='store_true')
+    parser.add_argument('--copy', action='store_true')
+    args = parser.parse_args()
+
     with open("config.toml", "rb") as f:
         cfg = tomllib.load(f)
-    try:
-        pass
-        # process_loops()
-    except RuntimeError as ex:
-        print(ex)
+
+    if not args.process and not args.copy:
+        parser.print_help()
         sys.exit(1)
-    copy_loops()
+
+    if args.process:
+        try:
+            process_loops()
+        except RuntimeError as ex:
+            print(ex)
+            sys.exit(1)
+
+    if args.copy:
+        copy_loops()
