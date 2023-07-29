@@ -11,6 +11,11 @@ from src.slot import Slot
 cfg = {}
 
 
+def get_loops(dir: Path) -> list[Path]:
+    return list(dir.glob("*.aif")) + list(dir.glob("*.wav"))
+
+
+
 def process_loops():
     from_dir = Path(cfg['loops']['path_raw'])
     to_dir = Path(cfg['loops']['path_processed'])
@@ -22,8 +27,7 @@ def process_loops():
         shutil.move(loop, loop.parent / loop.name.replace(' ', '_'))
 
     audacity = AudacityConnector(cfg['loops']['gain'], cfg['loops']['bit_depth'])
-    files = list(from_dir.glob("*.aif")) + list(from_dir.glob("*.wav"))
-    for loop in files:
+    for loop in get_loops(from_dir):
         print(loop)
         # TODO: These go to macro_output! Need to add this to the config
         audacity.convert(from_dir / loop.name, to_dir / loop.name)
@@ -35,7 +39,7 @@ def copy_loops():
     if not storage_dir.exists():
         storage_dir.mkdir()
 
-    for i, loop in enumerate(from_dir.glob("*")):
+    for i, loop in enumerate(get_loops(from_dir)):
         print(loop)
         slot = Slot(storage_dir, i+1)  # Start at 01
         slot.store(loop)
