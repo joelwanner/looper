@@ -30,6 +30,5 @@ class AudacityConnector:
         def do(cmd, **kwargs):
             print(self._run(f"{cmd}: {', '.join(f'{k}={v}' for k, v in kwargs.items())}"))
         do("Help", Command="Open")
-        return
         do("SelectAll")
         do("Normalize", PeakLevel=self.gain_db)

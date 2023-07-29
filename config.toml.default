@@ -5,4 +5,5 @@ gain = -24.0 # [dB]
 bit_depth = 16 # [bit]
 
 [device]
-volume = 'JAMMAN'
+volume = '/Volumes/JAMMAN'
+directory = 'JamManStereo'
