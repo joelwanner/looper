@@ -2,6 +2,7 @@
 import argparse
 import sys
 import tomllib
+import shutil
 from pathlib import Path
 
 from src.audacity import AudacityConnector
@@ -15,6 +16,10 @@ def process_loops():
     to_dir = Path(cfg['loops']['path_processed'])
     if not to_dir.exists():
         to_dir.mkdir(parents=True)
+
+    # Filename pre-processing
+    for loop in from_dir.glob("*"):
+        shutil.move(loop, loop.parent / loop.name.replace(' ', '_'))
 
     audacity = AudacityConnector(cfg['loops']['gain'], cfg['loops']['bit_depth'])
     files = list(from_dir.glob("*.aiff")) + list(from_dir.glob("*.wav"))

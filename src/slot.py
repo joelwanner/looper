@@ -55,7 +55,7 @@ class Slot:
 
     def store(self, loop: Path) -> None:
         # Extract metadata
-        if match := re.search(r'(\d+)\s*bpm', loop.stem):
+        if match := re.search(r'(\d+)[\s_-]*bpm', loop.stem):
             bpm = int(match.group(1))
         else:
             bpm = 120
