@@ -17,7 +17,8 @@ def process_loops():
         to_dir.mkdir(parents=True)
 
     audacity = AudacityConnector(cfg['loops']['gain'], cfg['loops']['bit_depth'])
-    for loop in from_dir.glob("*"):
+    files = list(from_dir.glob("*.aiff")) + list(from_dir.glob("*.wav"))
+    for loop in files:
         print(loop)
         audacity.convert(from_dir / loop, to_dir / loop)
 

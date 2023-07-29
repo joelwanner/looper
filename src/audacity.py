@@ -16,9 +16,11 @@ class AudacityConnector:
             raise RuntimeError("Audacity is not running. Please start it")
 
         self.client = PipeClient()
+        self._setup()
 
-    def _run(self, cmd: str) -> str:
-        self.client.write(cmd)
+    def _run(self, cmd: str, **kwargs) -> str:
+        full_cmd = f"{cmd}: {', '.join(f'{k}={v}' for k, v in kwargs.items())}" if kwargs else cmd
+        self.client.write(full_cmd)
         start = time.time()
         while time.time() < start + TIMEOUT:
             time.sleep(0.1)
@@ -26,9 +28,16 @@ class AudacityConnector:
                 return reply
         raise TimeoutError
 
+    def _setup(self) -> None:
+        self._run("SetProject")
+
+    def _cleanup(self) -> None:
+        self._run("Select", TrackCount=2)
+        self._run("RemoveTracks")
+
     def convert(self, in_path, out_path):
-        def do(cmd, **kwargs):
-            print(self._run(f"{cmd}: {', '.join(f'{k}={v}' for k, v in kwargs.items())}"))
-        do("Help", Command="Open")
-        do("SelectAll")
-        do("Normalize", PeakLevel=self.gain_db)
+        self._cleanup()
+        self._run("Import2", Filename=in_path)
+        self._run("SelectAll")
+        self._run("Normalize", PeakLevel=self.gain_db)
+        self._run("ExportWav", Filename=out_path)
