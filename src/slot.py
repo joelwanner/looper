@@ -15,7 +15,7 @@ class Slot:
 
     def write_patch_xml(self, name: str) -> None:
         root = ET.Element('JamManPatch',
-            xlmns="http://schemas.digitech.com/JamMan/Patch",
+            xmlns="http://schemas.digitech.com/JamMan/Patch",
             device='JamManStereo',
             version='1',
         )
@@ -34,7 +34,7 @@ class Slot:
 
     def write_phrase_xml(self, path: Path, bpm: int, timesig: int) -> None:
         root = ET.Element('JamManPhrase',
-            xlmns="http://schemas.digitech.com/JamMan/Phrase",
+            xmlns="http://schemas.digitech.com/JamMan/Phrase",
             version='1',
         )
         phrase_uuid = uuid.uuid3(uuid.NAMESPACE_DNS, f"a.{self.idx}.loop")
