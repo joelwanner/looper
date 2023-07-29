@@ -22,10 +22,10 @@ def process_loops():
         shutil.move(loop, loop.parent / loop.name.replace(' ', '_'))
 
     audacity = AudacityConnector(cfg['loops']['gain'], cfg['loops']['bit_depth'])
-    files = list(from_dir.glob("*.aiff")) + list(from_dir.glob("*.wav"))
+    files = list(from_dir.glob("*.aif")) + list(from_dir.glob("*.wav"))
     for loop in files:
         print(loop)
-        audacity.convert(from_dir / loop, to_dir / loop)
+        audacity.convert(from_dir / loop.name, to_dir / loop.name)
 
 
 def copy_loops():
