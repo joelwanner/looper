@@ -25,6 +25,7 @@ def process_loops():
     files = list(from_dir.glob("*.aif")) + list(from_dir.glob("*.wav"))
     for loop in files:
         print(loop)
+        # TODO: These go to macro_output! Need to add this to the config
         audacity.convert(from_dir / loop.name, to_dir / loop.name)
 
 
